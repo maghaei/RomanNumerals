@@ -5,15 +5,15 @@ public class RomanNumerals implements checkForRepetition{
 		return 0;
 	}
 	
-	public boolean checkForRepetition(String s)
+	public boolean checkForIXCMRepetition(String s)
 	{
-		boolean state = true;
+		boolean repeatState = true;
 		int i = 0, x = 0, c = 0,m = 0;
 		
 		char[] array = s.toCharArray();
 		for (int j = 0; j < array.length; j++)
 		{
-			if (j <= array.length - 3)
+			if (j <= array.length - 4)
 			{
 				char element = array[j];
 				switch(element)
@@ -31,16 +31,54 @@ public class RomanNumerals implements checkForRepetition{
 				}
 			}
 		}
-		if (i > 0 || x > 0 || c > 0 || m > 0) state = false;
-		return state;
+		if (i > 0 || x > 0 || c > 0 || m > 0) repeatState = false;
+		return repeatState;
 	}
 	
 	public boolean isRepeatedThreeTimes(char[] array, char ch, int index)
 	{
+		boolean isRepeatedMoreThanThreeTimes = false;
+		if (index <= array.length - 2)
+		{
+			if (array[index+1] == ch && array[index+2] == ch) isRepeatedMoreThanThreeTimes = true;
+		}
+		return isRepeatedMoreThanThreeTimes;
+	}
+	
+	public boolean isVLDRepeated(String s)
+	{
+		boolean isRepeated = false;
+		int v = 0, l = 0, d = 0;
+		
+		char[] array = s.toCharArray();
+		for (int i = 0; i < array.length; i++)
+		{
+			if (i <= array.length - 2)
+			{
+				char element = array[i];
+				switch(element)
+				{
+				case 'V': if (isRepeated(array, element, i)) v++;
+					break;
+				case 'L': if (isRepeated(array, element, i)) l++; 
+					break;
+				case 'D': if (isRepeated(array, element, i)) d++;
+					break;
+				default: 
+					break;
+				}
+			}
+		}
+		if (v > 0 || l > 0 || d > 0) isRepeated = true;
+		return isRepeated;
+	}
+	
+	public boolean isRepeated(char[] array, char ch, int index)
+	{
 		boolean state = false;
 		if (index <= array.length - 2)
 		{
-			if (array[index+1] == ch && array[index+2] == ch) state = true;
+			if (array[index+1] == ch) state = true;
 		}
 		return state;
 	}

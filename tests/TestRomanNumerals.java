@@ -4,13 +4,8 @@ import org.junit.Test;
 
 public class TestRomanNumerals {
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-
-	@Test //(expected = RomanNumeralsException.class)
-	public void test_is_there_more_than_three_repetitions()
+	@Test 
+	public void test_IXCM_More_Than_Three_Repetitions()
 	{
 		//Arrange
 		RomanNumerals r = new RomanNumerals();
@@ -18,14 +13,14 @@ public class TestRomanNumerals {
 		//
 		
 		//Act
-		String n = "MCMLXXXXIV";
+		String n = "MLCCCCIV";
 		
 		//Assert
-		assertFalse(r.checkForRepetition(n));
+		assertFalse(r.checkForIXCMRepetition(n));
 	}
 	
-	@Test //(expected = RomanNumeralsException.class)
-	public void test_is_there_three_repetitions()
+	@Test 
+	public void test_IXCM_Three_Repetitions()
 	{
 		//Arrange
 		RomanNumerals r = new RomanNumerals();
@@ -34,6 +29,32 @@ public class TestRomanNumerals {
 		String n = "MCMLXXXIV";
 		
 		//Assert
-		assertTrue(r.checkForRepetition(n));
+		assertTrue(r.checkForIXCMRepetition(n));
+	}
+	
+	@Test 
+	public void test_VLD_Repeated()
+	{
+		//Arrange
+		RomanNumerals r = new RomanNumerals();
+		
+		//Act
+		String n = "MXVVIXC";
+		
+		//Assert
+		assertTrue(r.isVLDRepeated(n));
+	}
+	
+	@Test 
+	public void test_VLD_Not_Repeated()
+	{
+		//Arrange
+		RomanNumerals r = new RomanNumerals();
+		
+		//Act
+		String n = "VXILCD";
+		
+		//Assert
+		assertFalse(r.isVLDRepeated(n));
 	}
 }
