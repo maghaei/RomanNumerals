@@ -82,4 +82,56 @@ public class RomanNumerals implements checkForRepetition{
 		}
 		return state;
 	}
+	
+	public boolean hasValidSubtraction(String s)
+	{
+		boolean subtractionState = true;
+		char[] array = s.toCharArray();
+		for(int i = 0; i < array.length - 1; i++)
+		{
+			char ch = array[i];
+			switch(ch)
+			{
+			case 'I': if (array[i+1] != 'V' && array[i+1] != 'X') subtractionState = false;
+				break;
+			case 'X': if (array[i+1] != 'L' && array[i+1] != 'C') subtractionState = false;
+				break;
+			case 'C': if (array[i+1] != 'D' && array[i+1] != 'M') subtractionState = false;
+				break;
+			default:
+				break;
+			}
+		}
+		return subtractionState;
+	}
+	
+	public boolean hasOnlyOneSubtraction(String s)
+	{
+		boolean subtractionState = true;
+		char[] array = s.toCharArray();
+		for(int i = 2; i < array.length; i++)
+		{
+			char ch = array[i];
+			char ch1 = array[i-1];
+			char ch2 = array[i-2];
+			switch(ch)
+			{
+			case 'V': if (ch1 == 'I' && ch2 == 'I') subtractionState = false;
+				break;
+			case 'X': if (ch1 == 'I' && ch2 == 'I') subtractionState = false;
+				break;
+			case 'L': if (ch1 == 'X' && ch2 == 'X') subtractionState = false;
+				break;
+			case 'C': if (ch1 == 'X' && ch2 == 'X') subtractionState = false;
+			break;
+			case 'D': if (ch1 == 'C' && ch2 == 'C') subtractionState = false;
+			break;
+			case 'M': if (ch1 == 'C' && ch2 == 'C') subtractionState = false;
+			break;
+			default:
+				break;
+			}
+		}
+		return subtractionState;
+	}
 }
