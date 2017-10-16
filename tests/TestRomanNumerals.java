@@ -65,7 +65,7 @@ public class TestRomanNumerals {
 		RomanNumerals r = new RomanNumerals();
 		
 		//Act
-		String n = "CMXLIIX";
+		String n = "CMXVLIIX";
 		
 		//Assert
 		assertFalse(r.hasValidSubtraction(n));
@@ -78,7 +78,7 @@ public class TestRomanNumerals {
 		RomanNumerals r = new RomanNumerals();
 		
 		//Act
-		String n = "CMXLIX";
+		String n = "MCMXLI";
 		
 		//Assert
 		assertTrue(r.hasValidSubtraction(n));
@@ -108,5 +108,31 @@ public class TestRomanNumerals {
 		
 		//Assert
 		assertTrue(r.hasOnlyOneSubtraction(n));
+	}
+	
+	@Test 
+	public void test_VLD_Can_Not_Be_Subtracted()
+	{
+		//Arrange
+		RomanNumerals r = new RomanNumerals();
+		
+		//Act
+		String n = "LCDM";
+		
+		//Assert
+		assertTrue(r.isVLDSubtracted(n));
+	}
+	
+	@Test 
+	public void test_Convert_Roman_To_Arabic() throws RomanNumeralsException
+	{
+		//Arrange
+		RomanNumerals r = new RomanNumerals();
+		
+		//Act
+		String n = "MCMXIII";
+		
+		//Assert
+		assertEquals(1913, r.convertRomanToArabic(n));
 	}
 }

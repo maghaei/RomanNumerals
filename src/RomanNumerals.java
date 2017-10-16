@@ -1,5 +1,5 @@
 
-public class RomanNumerals implements checkForRepetition{
+public class RomanNumerals{
 	public int convertToInteger(String romanNum) {
 		// To be Implemented
 		return 0;
@@ -92,11 +92,11 @@ public class RomanNumerals implements checkForRepetition{
 			char ch = array[i];
 			switch(ch)
 			{
-			case 'I': if (array[i+1] != 'V' && array[i+1] != 'X') subtractionState = false;
+			case 'I': if (array[i+1] != 'V' && array[i+1] != 'X' && array[i+1] != 'I') subtractionState = false;
 				break;
-			case 'X': if (array[i+1] != 'L' && array[i+1] != 'C') subtractionState = false;
+			case 'X': if (array[i+1] != 'L' && array[i+1] != 'C' && array[i+1] != 'I') subtractionState = false;
 				break;
-			case 'C': if (array[i+1] != 'D' && array[i+1] != 'M') subtractionState = false;
+			case 'C': if (array[i+1] != 'D' && array[i+1] != 'M' && array[i+1] != 'I') subtractionState = false;
 				break;
 			default:
 				break;
@@ -134,4 +134,157 @@ public class RomanNumerals implements checkForRepetition{
 		}
 		return subtractionState;
 	}
+	
+	public boolean isVLDSubtracted(String s)
+	{
+		boolean subtractionState = false;
+		char[] array = s.toCharArray();
+		for(int i = 0; i < array.length - 1; i++)
+		{
+			char ch = array[i];
+			char ch1 = array[i+1];
+			switch(ch)
+			{
+			case 'V': if (ch1 == 'X' || ch1 == 'L' || ch1 == 'C' || ch1 == 'D' || ch1 == 'M') subtractionState = true;
+				break;
+			case 'L': if (ch1 == 'C' || ch1 == 'D' || ch1 == 'M') subtractionState = true;
+				break;
+			case 'D': if (ch1 == 'M') subtractionState = true;
+			break;
+			default:
+				break;
+			}
+		}
+		return subtractionState;
+	}
+	
+	public int convertRomanToArabic(String s) throws RomanNumeralsException
+	{
+		int number = 0;
+		char ch;
+		if (!checkForIXCMRepetition(s)) throw new RomanNumeralsException("I-X-C-M wrong repetition!");
+		else 
+		if (isVLDRepeated(s)) throw new RomanNumeralsException("V-L-D repeated!");
+		else 
+		if (!hasValidSubtraction(s)) throw new RomanNumeralsException("Inavlid subtraction!");
+		else 
+		if (!hasOnlyOneSubtraction(s)) throw new RomanNumeralsException("More than one subtraction per numeral!");	
+		else 
+		if (isVLDSubtracted(s)) throw new RomanNumeralsException("V-L-D subtracted!");
+		else 
+		{
+			int i = 0;
+			char[] array = s.toUpperCase().toCharArray();
+			while (i < array.length)
+			{
+					ch = array[i];
+					switch (ch)
+					{
+						case 'M': number += 1000; i++;
+							break;
+						case 'I':
+							if (i+1 < array.length)
+							{
+								if (array[i+1] == 'V') 
+								{
+									number += 4;
+									i += 2;
+								}
+								else
+								if (array[i+1] == 'X') 
+								{
+									number += 9;
+									i += 2;
+								}
+								else 
+								if (array[i+1] == 'I')
+								{
+									number++;
+									i++;
+								}
+							}
+							else
+							{
+								number++;
+								i++;
+							}
+							break;
+						case 'X':
+							if (i+1 < array.length)
+							{
+								if (array[i+1] == 'L') 
+								{
+									number += 40;
+									i += 2;
+								}
+								else
+								if (array[i+1] == 'C') 
+								{
+									number += 90;
+									i += 2;
+								}
+								else 
+								{
+									number += 10;
+									i++;
+								}	
+							}
+							else 
+							{
+								number += 10;
+								i++;
+							}
+							break;
+						case 'C':
+							if (i+1 < array.length)
+							{
+								if (array[i+1] == 'D') 
+								{
+									number += 400;
+									i += 2;
+								}
+								else
+								if (array[i+1] == 'M') 
+								{
+									number += 900;
+									i += 2;
+								}
+								else
+								if (array[i+1] == 'C') 
+								{
+									number += 100;
+									i++;
+								}
+							}
+							else 
+							{
+								number += 100;
+								i++;
+							}
+							break;
+						case 'V':
+							if (i+1 < array.length)
+							{
+								if (array[i+1] == 'I') 
+								{
+									number += 6;
+									i += 2;
+								}
+							}
+							else 
+							{
+								number += 5;
+								i++;
+							}
+							break;
+						case 'L': number += 50; i++;
+							break;
+						case 'D': number += 500; i++;
+							break;
+					}
+			}
+		}
+		return number;
+	}
+
 }
